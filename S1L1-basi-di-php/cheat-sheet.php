@@ -15,7 +15,7 @@ corrisponde a
 
 // le variabili iniziano con il dollaro (obbligatorio)
 // per definire le stringhe si possono usare ' oppure " (non `)
-$greet = `ciao a tutti`;
+$greet = 'ciao a tutti';
 $number = 5;
 $float_num = 5.6;
 $bool = true;
@@ -49,7 +49,7 @@ VALORI FALSY:
 - the boolean false itself
 - the integer 0 (zero)
 - the floats 0.0 and -0.0 (zero)
-- the empty string "", and the string "0"
+- the empty string "", and the string "0" !!!!
 !!!- an array with zero elements []
 - the unit type NULL (including unset variables)
 */
@@ -57,13 +57,21 @@ VALORI FALSY:
 $quantity = 10;
 echo '<br>';
 
-if ($quantity > 5) {
+// if ($quantity > 5) {
+//     echo "$quantity è maggiore di 5";
+// } elseif ($quantity < 5) {
+//     echo "$quantity è minore di 5";
+// } else {
+//     echo "$quantity è uguale a 5";
+// }
+
+if ($quantity > 5) :
     echo "$quantity è maggiore di 5";
-} elseif ($quantity < 5) {
+elseif ($quantity < 5) :
     echo "$quantity è minore di 5";
-} else {
+else :
     echo "$quantity è uguale a 5";
-}
+endif;
 
 // -----------------------------------------------------------------------------------
 // SWITCH
@@ -119,13 +127,6 @@ echo '<br>', $altra_var;
 // ARRAY
 // -----------------------------------------------------------------------------------
 
-$languages = [
-    'php',
-    'javascript',
-    'python',
-    'lisp',
-];
-
 // forma equivalente più vecchia
 /*
 $languages = array(
@@ -136,3 +137,95 @@ $languages = array(
 );
 */
 
+$languages = [
+    1 => 'php',
+    100 => 'javascript',
+    20 => 'python',
+    3 => 'lisp',
+];
+
+// echo $languages; // non va con gli array
+echo '<pre>';
+// var_dump($languages);
+print_r($languages);
+echo '</pre>';
+
+$languages = [
+    'first' => 'php',
+    'javascript',
+    'python',
+    'lisp',
+];
+
+$languages[] = 'Java';
+
+
+
+// unset($languages[2]);
+
+echo '<pre>';
+// var_dump($languages);
+print_r($languages);
+echo '</pre>';
+
+// print_r($languages[count($languages) - 1]);
+print_r($languages[0]);
+
+print_r(count($languages));
+
+echo '<ul>';
+for($i = 0; $i < count($languages); $i++) {
+    echo "<li>$languages[$i]</li>";
+}
+echo '</ul>';
+
+foreach ($languages as $chiave => $valore) {
+    $sondentro = "definito nel foreach";
+    echo "<li>$chiave ---- $valore</li>";
+}
+
+echo $sondentro;
+
+$condizione = false;
+
+while ($condizione) {
+    // cose da fare
+}
+
+do {
+    // cose da fare
+} while ($condizione);
+
+var_dump(1 == '1'); // true
+var_dump(1 === '1'); // false
+
+
+
+$arr = [
+    'mammiferi' => [
+        'tigri', 'cani', 'gatti'
+    ],
+    'uccelli' => ['passerotti', 'cormorani', 'pappagalli'],
+    'pesci' => ['salmone', 'trota'],
+];
+
+
+// in JS
+// {
+//     nome: 'pinco',
+//     eta: 30,
+//     colori: [
+//         'verde',
+//         'giallo'
+//     ]
+// }
+
+// in php
+[
+    'nome' => 'pinco',
+    'eta' => 30,
+    'colori' => [
+        'verde',
+        'giallo'
+    ]
+];
