@@ -22,7 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (strlen($password) < 8) {
-        $errors['password'] = 'Password troppo corta';
+        $errors['password'][] = 'Password troppo corta';
+    }
+
+    if (true) {
+        $errors['password'][] = 'Password non contine numeri';
     }
 
     // salvarli nel database
@@ -32,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($errors == []) {
         header('Location: /IFOA0124/S1L2-dati-e-server/1-forms/success.php');
     }
+
+    echo '<pre>' . print_r($errors, true) . '</pre>';
+
 } ?>
 
 <!DOCTYPE html>
@@ -60,7 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label for="password">Password</label>
         <input type="password" name="password" id="password" placeholder="A secure password" class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>">
-        <div class="error"><?= $errors['password'] ?? '' ?></div>
+        <div class="error"><?php
+            if ($errors['password']) {
+                echo '<ul>';
+                foreach($errors['password'] as $error) {
+                    echo "<li>$error</li>";
+                }
+                echo '</ul>';
+            } ?>
+        </div>
         <br>
 
         <button type="submit">Invia</button>
@@ -69,3 +84,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
+
+
+<?php
+$errors = [
+    'name' => ['nome troppo corto'],
+    'password' => [
+        'non ci sono i caratteri',
+        'troppo corta',
+        'non ci sono i simboli',
+    ]
+];
+
+
+
+
+$errors = [
+    'name' => 'nome troppo corto',
+    'password' => 'non ci sono i caratteri',
+];
