@@ -1,4 +1,3 @@
-
 <a href="http://localhost/IFOA0124/S1L3-database-mysql-1/1-pizzeria/?id=1">Pizza 1</a><br>
 <a href="http://localhost/IFOA0124/S1L3-database-mysql-1/1-pizzeria/?id=3">Pizza 2</a><br>
 <a href="http://localhost/IFOA0124/S1L3-database-mysql-1/1-pizzeria/?id=4">Pizza 3</a><br>
@@ -40,6 +39,7 @@ $stmt = $pdo->query('SELECT * FROM dishes');
 echo '<ul>';
 foreach ($stmt as $row)
 {
+    echo '<pre>' . print_r($row, true) . '</pre>';
     echo "<li>$row[name]</li>";
 }
 echo '</ul>';
@@ -51,7 +51,7 @@ $id = $_GET['id'];
 // $stmt = $pdo->query("SELECT name FROM dishes WHERE id = $id"); // NON FARE MAI!!!!!!
 $stmt = $pdo->prepare("SELECT name FROM dishes WHERE id = ?");
 $stmt->execute([$id]);
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$row = $stmt->fetch();
 echo "<h2>$row[name]</h2>";
 
 
@@ -66,7 +66,7 @@ $stmt->execute([
 $stmt = $pdo->prepare("DELETE FROM dishes WHERE id = ?");
 $stmt->execute([$id]);
 
-// DELETE
+// UPDATE
 $stmt = $pdo->prepare("UPDATE dishes SET name = :name  WHERE id = :id");
 $stmt->execute([
     'id' => 16,
