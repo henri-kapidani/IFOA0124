@@ -15,4 +15,3 @@ if (isset($_SESSION['user_id'])) {
 
     $user_from_db = $stmt->fetch();
 }
-?>
