@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . '/includes/init.php';
+if ($user_from_db) header('Location: /IFOA0124/S2L1-cose-di-php/1-login/');
 
 $user = [];
 $user['username'] = $_POST['username'] ?? '';
@@ -23,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($_POST['password'], $user_from_db["password"])) {
             // se gli hash coincidono => utente loggato, altrimenti errore
             $_SESSION['user_id'] = $user_from_db['id'];
-            echo ('Ciao ' . $user_from_db["username"]);
-            // header('Location: /IFOA0124/S2L1-cose-di-php/1-login/index.php'); exit;
+            // TODO: non arriva qui sotto
+            header('Location: /IFOA0124/S2L1-cose-di-php/1-login/'); exit;
         };
     }
 

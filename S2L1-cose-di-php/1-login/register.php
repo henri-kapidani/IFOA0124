@@ -4,12 +4,12 @@
 // require
 // require_once
 include_once __DIR__ . '/includes/init.php';
+if ($user_from_db) header('Location: /IFOA0124/S2L1-cose-di-php/1-login/');
 
 $user = [];
 $user['username'] = $_POST['username'] ?? '';
 $user['email'] = $_POST['email'] ?? '';
 $user['password'] = $_POST['password'] ?? '';
-print_r($user);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // validazioni
@@ -19,17 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         (username, email, password)
         VALUES (:username, :email, :password);
     ");
-    
-    // $stmt->execute([
-    //     'username' => $user['username'],
-    //     'email'    => $user['email'],
-    //     'password' => $user['password'],
-    // ]);
 
     $stmt->execute([
-        'username' => $_POST['username'],
-        'email'    => $_POST['email'],
-        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+        'username' => $user['username'],
+        'email'    => $user['email'],
+        'password' => password_hash($user['password'], PASSWORD_DEFAULT),
     ]);
 
     // mandiamo mail

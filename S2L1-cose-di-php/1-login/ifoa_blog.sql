@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 01:05 PM
+-- Generation Time: Apr 16, 2024 at 06:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,17 +32,6 @@ CREATE TABLE `categories` (
   `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Politica'),
-(2, 'Scuola'),
-(3, 'Cucina'),
-(4, 'Fantasy'),
-(5, 'IT');
-
 -- --------------------------------------------------------
 
 --
@@ -56,17 +45,6 @@ CREATE TABLE `posts` (
   `category_id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `title`, `contents`, `category_id`, `user_id`) VALUES
-(2, 'Post 1', NULL, 1, 1),
-(3, 'Post scuola', NULL, 2, 1),
-(4, 'Post 3', NULL, 3, 1),
-(5, 'post 4', NULL, 3, 2),
-(6, 'Post 5', NULL, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -87,12 +65,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `image`) VALUES
-(1, 'asdf', NULL, NULL, NULL),
-(2, 'qwer', NULL, NULL, NULL),
-(3, 'zxcv', NULL, NULL, NULL),
-(4, 'mugonyga', 'qamero@mailinator.com', 'Pa$$w0rd!', NULL),
-(5, 'howew', 'dozyf@mailinator.com', '$2y$10$lc98jfPYVhuDr3lHTBIgSux0aE7PHH8YPyeS1cCx1MNC0gP0.K/Im', NULL),
-(6, 'uiop', 'uiop@uiop.uiop', '$2y$10$MA3Rx2rfHnVoRbs47.RQMuWyxlLHsYwanw11nrcd0VsajIfOBA0ki', NULL);
+(6, 'uiop', 'uiop@uiop.uiop', '$2y$10$MA3Rx2rfHnVoRbs47.RQMuWyxlLHsYwanw11nrcd0VsajIfOBA0ki', NULL),
+(7, 'qwer', 'qwer@qwer.qwer', '$2y$10$v67ygXbLCku9vHYzoGEpBOkTEEjEta4D8bl2EBFnAhnnqctvyNo/6', NULL),
+(9, 'asdf', 'asdf@asdf.asdf', '$2y$10$El7qr3syb/NeTkKCobU/SuL2FuXoh978UU.1RZrpHppNf5VLSOe/O', NULL),
+(10, 'zxcv', 'zxcv@zxcv.zxcv', '$2y$10$ksoifGDElJtKdFC8RKiorOtyEwHkt4yS/smEc9xRZjUwlFMkAE36.', NULL);
 
 --
 -- Indexes for dumped tables
@@ -116,7 +92,9 @@ ALTER TABLE `posts`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -138,7 +116,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
