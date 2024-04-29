@@ -14,7 +14,7 @@ const PostDetails = () => {
                 console.log(data);
                 setPost(data);
             });
-    }, []);
+    }, [id]);
 
     return (
         post && (

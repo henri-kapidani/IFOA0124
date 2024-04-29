@@ -82,7 +82,10 @@ const Home = () => {
                     </li>
 
                     {generatePaginationArray().map((page) => (
-                        <li className={`page-item ${page.active && 'active'}`}>
+                        <li
+                            key={page.n}
+                            className={`page-item ${page.active && 'active'}`}
+                        >
                             <span
                                 className="page-link"
                                 onClick={() => changePage(page.n)}
@@ -94,7 +97,7 @@ const Home = () => {
 
                     <li
                         className={`page-item ${
-                            currentPage === lastPage && 'disabled'
+                            currentPage === 'lastPage' && 'disabled'
                         }`}
                     >
                         <span
