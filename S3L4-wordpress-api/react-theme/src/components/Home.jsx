@@ -60,6 +60,7 @@ const Home = () => {
                 Authorization: `Basic ${authString}`,
             },
             method: 'DELETE',
+            // body: JSON.stringify(obj)
         }).then((res) => {
             if (res.ok) {
                 setDeletes(deletes + 1);
