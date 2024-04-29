@@ -20,6 +20,8 @@ const PostDetails = () => {
         post && (
             <>
                 <h1>{post.title.rendered}</h1>
+                {/* categories */}
+                {/* author */}
                 <div
                     dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 ></div>
