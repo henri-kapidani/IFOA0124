@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom/dist';
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
+    const [deletes, setDeletes] = useState(0);
     const [lastPage, setLastPage] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        fetch(`${baseApiUrl}/posts?page=${currentPage}`)
+        fetch(`${baseApiUrl}/posts?page=${currentPage}&_embed=1`)
             .then((res) => {
                 // recupera i dati della paginazione dagli header
                 setLastPage(parseInt(res.headers.get('X-WP-TotalPages')));
@@ -18,7 +19,7 @@ const Home = () => {
                 console.log(data);
                 setPosts(data);
             });
-    }, [currentPage]);
+    }, [currentPage, deletes]);
 
     const changePage = (page) => {
         setCurrentPage(page);
@@ -52,14 +53,43 @@ const Home = () => {
     */
     }
 
+    const deletePost = (postId) => {
+        const authString = btoa('asdf:B3HB GUfd yfPZ mlFi TU5e uVF5');
+        fetch(`${baseApiUrl}/posts/${postId}`, {
+            headers: {
+                Authorization: `Basic ${authString}`,
+            },
+            method: 'DELETE',
+        }).then((res) => {
+            if (res.ok) {
+                setDeletes(deletes + 1);
+            }
+        });
+    };
+
     return (
         <>
             <ul>
                 {posts.map((post) => (
                     <li key={post.id}>
+                        {/* <img
+                            src={
+                                post._embedded['wp:featuredmedia']
+                                    ? post._embedded['wp:featuredmedia'][0]
+                                          .source_url
+                                    : '/assets/picsum53.jpg'
+                            }
+                            alt=""
+                        /> */}
                         <Link to={`/posts/${post.id}`}>
                             {post.title.rendered}
                         </Link>
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => deletePost(post.id)}
+                        >
+                            Delete
+                        </button>
                     </li>
                 ))}
             </ul>

@@ -8,7 +8,7 @@ const PostDetails = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        fetch(`${baseApiUrl}/posts/${id}`)
+        fetch(`${baseApiUrl}/posts/${id}?_embed=1`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
@@ -20,8 +20,21 @@ const PostDetails = () => {
         post && (
             <>
                 <h1>{post.title.rendered}</h1>
-                {/* categories */}
-                {/* author */}
+                {post._embedded['wp:term'] && (
+                    <div>
+                        {post._embedded['wp:term'][0].map((category) => (
+                            <span
+                                key={category.id}
+                                className="badge rounded-pill text-bg-primary"
+                            >
+                                {category.name}
+                            </span>
+                        ))}
+                    </div>
+                )}
+
+                <h2>Author: {post._embedded['author'][0].name}</h2>
+
                 <div
                     dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 ></div>
