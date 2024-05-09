@@ -110,5 +110,4 @@ foreach($pets as $index => $row) {
     // if ($index === 0) fputcsv($file_handle, array_keys($row));
     fputcsv($file_handle, $row);
 }
-
 fclose($file_handle);
