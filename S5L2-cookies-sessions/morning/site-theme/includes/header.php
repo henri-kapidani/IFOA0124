@@ -1,6 +1,7 @@
 <?php
 include_once __DIR__ . '/constants.php';
 include_once __DIR__ . '/translations.php';
+include_once __DIR__ . '/db.php';
 
 // echo '<pre>' . print_r($_SERVER, true) . '</pre>'; exit;
 
@@ -25,14 +26,12 @@ if (!isset($_COOKIE['theme'])) {
 }
 
 // determinare la lingua scelta nel cookie
-if (!isset($_COOKIE['language'])) {
+if (!isset($_COOKIE['language']) || !in_array($_COOKIE['language'], $site_languages)) {
     setcookie('language', 'it', $cookie_expiration);
     $language = 'it';
 } else {
-    $language = $_COOKIE['language'];
-}
-
-?>
+    $language = $_COOKIE['language']; 
+} ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,12 +40,15 @@ if (!isset($_COOKIE['language'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/<?= $isLight ? 'style.light.css' : 'style.dark.css' ?>" />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"
     defer></script>
-    <link rel="stylesheet" href="assets/<?= $isLight ? 'style.light.css' : 'style.dark.css' ?>" />
+    <script src="assets/scripts.js" defer></script>
 </head>
 
 <body>
@@ -65,13 +67,13 @@ if (!isset($_COOKIE['language'])) {
                     </li>
                 </ul>
                 <a href="?changetheme" class="btn btn-primary">Change theme</a>
-                <form action="<?= SITE_URL . '/change-language.php' ?>" method="get">
-                    <select name="language">
+                <form id="change-language" action="<?= SITE_URL . '/change-language.php' ?>" method="get">
+                    <select name="language" id="select-language">
                         <option value="it"<?= $language === 'it' ? ' selected' : '' ?>>IT</option>
                         <option value="en"<?= $language === 'en' ? ' selected' : '' ?>>EN</option>
                         <option value="fr"<?= $language === 'fr' ? ' selected' : '' ?>>FR</option>
                     </select>
-                    <button>change</button>
+                    <!-- <button>change</button> -->
                 </form>
             </div>
         </div>
