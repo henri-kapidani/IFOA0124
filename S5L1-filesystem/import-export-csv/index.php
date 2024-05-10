@@ -1,3 +1,11 @@
+<?php
+$content = '';
+
+// sleep(20);
+// echo "siamo qui";
+// echo $ciao;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +20,11 @@
         <h2>Upload your CSV</h2>
         <form method="post" action="import.php" enctype="multipart/form-data">
             <div class="mb-3">
-                <input type="text" name="prova">
-                <label for="formFile" class="form-label">File CSV</label>
-                <input class="form-control" type="file" id="formFile" name="uploaded_file">
+                <label for="uploaded_file" class="form-label">File CSV</label>
+                <input class="form-control" type="file" id="uploaded_file" name="uploaded_file" accept="text/csv">
+            <div class="mb-3">
+                <label for="profile_image" class="form-label">Profile image</label>
+                <input class="form-control" type="file" id="profile_image" name="profile_image" accept="image/*">
             </div>
             <button type="submit" class="btn btn-primary">Load</button>
         </form>
