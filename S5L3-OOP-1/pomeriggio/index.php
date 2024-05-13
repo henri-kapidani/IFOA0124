@@ -4,13 +4,16 @@
 // i metodi per aggiungere labels ed inputs
 // un metodo per renderizzare il form
 // e un costruttore per passare gli attributi del form
+class Form
+{
+}
 
 $myForm = new Form('POST', 'action');
 
-$myform->addLabel('text', 'if-for');
+$myform->addLabel('text', 'id-for');
 $myForm->addInput('type', 'name', 'value', 'id-for');
 
-$myform->addLabel('text', 'if-for');
+$myform->addLabel('text', 'id-for');
 $myForm->addInput('type', 'name', 'value', 'id-for');
 ?>
 
