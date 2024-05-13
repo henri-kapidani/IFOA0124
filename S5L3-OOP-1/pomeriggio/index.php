@@ -1,20 +1,26 @@
 <?php
+setcookie('ciao', 'non so', time() - 24 * 60 * 60);
 
-// creare la classe Form con la proprietà che contiene l'HTML del form
-// i metodi per aggiungere labels ed inputs
-// un metodo per renderizzare il form
-// e un costruttore per passare gli attributi del form
-class Form
-{
-}
+include './Form.php';
 
-$myForm = new Form('POST', 'action');
+// form 1
+$myForm1 = new Form('GET', './');
+$myForm1->addLabel('Name', 'name');
+$myForm1->addInput('text', 'name', 'name');
+$myForm1->addLabel('Age', 'age');
+$myForm1->addInput('number', 'age', 'age', 18);
+$myForm1->addSumbit('Invia dati');
 
-$myform->addLabel('text', 'id-for');
-$myForm->addInput('type', 'name', 'value', 'id-for');
 
-$myform->addLabel('text', 'id-for');
-$myForm->addInput('type', 'name', 'value', 'id-for');
+// form 2
+$myForm2 = new Form('POST', '/add-product.php');
+$myForm2->addLabel('Product ID', 'pid');
+$myForm2->addInput('text', 'pid', 'pid');
+$myForm2->addLabel('Price', 'price');
+$myForm2->addInput('number', 'price', 'price');
+$myForm2->addLabel('Password', 'pass');
+$myForm2->addInput('password', 'pass', 'pass');
+$myForm2->addSumbit('Add product');
 ?>
 
 <!DOCTYPE html>
@@ -23,11 +29,15 @@ $myForm->addInput('type', 'name', 'value', 'id-for');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Form OOP</title>
 </head>
 
 <body>
-    <?php $myform->render(); ?>
+    <h1>Forms</h1>
+    <h2>Form 1</h2>
+    <?= $myForm1->render(); ?>
+    <h2>Form 2</h2>
+    <?= $myForm2->render(); ?>
 </body>
 
 </html>
