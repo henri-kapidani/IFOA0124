@@ -5,6 +5,7 @@ namespace project;
 use \libA\User as UserA;
 use \libB\User as UserB;
 use \libB\Animal;
+use \libB\subCategory\Car;
 
 include __DIR__ . '/libs/libA/User.php';
 include __DIR__ . '/libs/libB/User.php';
@@ -18,5 +19,5 @@ $myUser->greet();
 $userB->goodby();
 
 
-$myCar = new \libB\subCategory\Car();
+$myCar = new Car();
 $myCar->start();
