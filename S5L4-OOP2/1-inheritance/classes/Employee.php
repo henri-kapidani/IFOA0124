@@ -1,7 +1,9 @@
 <?php
 include_once __DIR__ . '/Person.php';
+include_once __DIR__ . '/../interfaces/StandardEmployee.php';
 
-class Employee extends Person
+
+class Employee extends Person implements StandardEmployee
 {
     public function askVacation($nDays)
     {

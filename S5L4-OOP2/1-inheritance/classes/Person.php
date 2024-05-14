@@ -2,6 +2,9 @@
 
 abstract class Person
 {
+    static public $greeting = 'Ciao a tutti<br>';
+    static public $count = 0;
+
     protected $name = 'Default name';
     public $age = 18;
 
@@ -9,6 +12,12 @@ abstract class Person
     {
         $this->name = $name;
         $this->age = $age;
+        self::$count++;
+    }
+
+    function __destruct()
+    {
+        self::$count--;
     }
 
     function getName()

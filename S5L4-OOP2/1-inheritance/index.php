@@ -10,6 +10,8 @@ include_once __DIR__ . '/classes/Manager.php';
 // // $aPerson->miachiave = 'Pinco';
 // echo $aPerson->age;
 // $aPerson->askVacation();
+echo Person::$greeting;
+
 
 echo '<h2>Developer</h2>';
 $developerZero = new Developer('John', 29, 15000);
@@ -36,3 +38,11 @@ $theManager->askVacation(30);
 $theManager->sing();
 $theManager->falsetta();
 $theManager->exercise();
+
+// new Manager('asdf', 20, 2);
+
+$theManager = null;
+
+
+echo '<h2>Persone instanziate</h2>';
+echo Person::$count;
