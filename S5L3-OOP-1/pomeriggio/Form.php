@@ -8,12 +8,14 @@ class Form
 {
     private $method;
     private $action;
+    // private $openingTag = '';
     private $formBody = '';
 
     public function __construct($method, $action)
     {
         $this->method = $method;
         $this->action = $action;
+        // $this->openingTag = "<form action=\"$action\" method=\"$method\">";
     }
 
     public function addLabel($text, $id)
@@ -38,5 +40,11 @@ class Form
                 $this->formBody
             </form>
         ";
+
+        // return "
+        //     $this->openingTag
+        //         $this->formBody
+        //     </form>
+        // ";
     }
 }

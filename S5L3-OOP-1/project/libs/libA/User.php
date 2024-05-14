@@ -1,4 +1,7 @@
 <?php
+
+namespace libA;
+
 class User
 {
     private $name;
