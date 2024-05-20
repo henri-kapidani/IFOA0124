@@ -17,4 +17,7 @@ class Book extends Model
     // protected $timestamps = false;
     // const CREATED_AT = 'creation_date';
     // const UPDATED_AT = 'updated_date';
+
+    protected $fillable = ['title', 'price', 'author', 'img'];
+    // protected $guarded = ['img'];
 }

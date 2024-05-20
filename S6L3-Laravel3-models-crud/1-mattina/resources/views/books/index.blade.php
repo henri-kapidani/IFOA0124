@@ -32,6 +32,7 @@
                         <td>{{ $book->created_at }}</td>
                         <td>{{ $book->updated_at }}</td>
                         <td>
+                            <a class="btn btn-warning" href="{{ route('books.edit', ['id' => $book]) }}">Edit</a>
                             <form action="{{ route('books.destroy', ['id' => $book]) }}" method="POST">
                                 @method('DELETE')
                                 @csrf

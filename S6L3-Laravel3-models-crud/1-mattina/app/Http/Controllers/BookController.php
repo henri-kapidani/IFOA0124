@@ -28,14 +28,10 @@ class BookController extends Controller
         // $myVar = Book::where()->max('price');
         // dump($books);
 
-        return view('books.index', [
-            'books' => $books,
-        ]);
-    }
-
-    public function create()
-    {
-        return view('books.create');
+        return view('books.index', compact('books'));
+        // return view('books.index', [
+        //     'books' => $books,
+        // ]);
     }
 
     public function show($id)
@@ -49,15 +45,45 @@ class BookController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('books.create');
+    }
+
     public function edit($id)
     {
-        return view('books.edit', compact('id'));
+        $book = Book::findOrFail($id);
+        // dd($book);
+        return view('books.edit', compact('book'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        // dd($data);
+
+        // validare i dati
+
+        // salvare i dati nel database
+        // TODO: risolvere errore del campo duplicato
+        $book = Book::findOrFail($id);
+        $book->title = $data['title'];
+        $book->author = $data['author'];
+        $book->price = $data['price'];
+        $book->img = $data['img'];
+        $book->update();
+
+        // ridirezionare
+        return redirect()->route('books.show', ['id' => $id]);
     }
 
     public function store(Request $request)
     {
         $data = $request->all();
         // dd($data);
+
+        // validare i dati
+
         // salvare i dati nel database
         $newBook = new Book();
         $newBook->title = $data['title'];
@@ -65,8 +91,6 @@ class BookController extends Controller
         $newBook->price = $data['price'];
         $newBook->img = $data['img'];
         $newBook->save();
-
-        // Book::insert
 
         // ridirezionare
         return redirect()->route('books.index');
