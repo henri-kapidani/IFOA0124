@@ -24,7 +24,7 @@
                 @foreach ($books as $book)
                     <tr>
                         <th scope="row">{{ $book->id }}</th>
-                        <td>{{ $book->title }}</td>
+                        <td><a href="{{ route('books.show', ['id' => $book]) }}">{{ $book->title }}</a></td>
                         <td>{{ $book->price }}</td>
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->img }}</td>
@@ -34,6 +34,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $books->links() }}
     @else
         <h2>Non ci sono libri</h2>
     @endif
