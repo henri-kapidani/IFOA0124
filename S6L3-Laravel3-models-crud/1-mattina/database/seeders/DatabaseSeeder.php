@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             // l'ordine in certi casi è importante (tebelle relazionate)
             UsersSeeder::class,
             BooksSeeder::class,
+            AuthorsSeeder::class,
         ]);
     }
 }
