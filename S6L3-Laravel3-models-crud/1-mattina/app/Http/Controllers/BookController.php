@@ -50,33 +50,6 @@ class BookController extends Controller
         return view('books.create');
     }
 
-    public function edit($id)
-    {
-        $book = Book::findOrFail($id);
-        // dd($book);
-        return view('books.edit', compact('book'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = $request->all();
-        // dd($data);
-
-        // validare i dati
-
-        // salvare i dati nel database
-        // TODO: risolvere errore del campo duplicato
-        $book = Book::findOrFail($id);
-        $book->title = $data['title'];
-        $book->author = $data['author'];
-        $book->price = $data['price'];
-        $book->img = $data['img'];
-        $book->update();
-
-        // ridirezionare
-        return redirect()->route('books.show', ['id' => $id]);
-    }
-
     public function store(Request $request)
     {
         $data = $request->all();
@@ -92,8 +65,37 @@ class BookController extends Controller
         $newBook->img = $data['img'];
         $newBook->save();
 
+        Book::create($data); // necessita del $fillable nel model
+
         // ridirezionare
-        return redirect()->route('books.index');
+        return redirect()->route('books.show', ['id' => $newBook->id]);
+    }
+
+    public function edit($id)
+    {
+        $book = Book::findOrFail($id);
+        // dd($book);
+        return view('books.edit', compact('book'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        // dd($data);
+
+        // validare i dati
+        // TODO: risolvere errore del campo duplicato con le validazioni
+
+        // aggiornare i dati nel database
+        $book = Book::findOrFail($id);
+        $book->title = $data['title'];
+        $book->author = $data['author'];
+        $book->price = $data['price'];
+        $book->img = $data['img'];
+        $book->update();
+
+        // ridirezionare
+        return redirect()->route('books.show', ['id' => $id]);
     }
 
     public function destroy($id)
