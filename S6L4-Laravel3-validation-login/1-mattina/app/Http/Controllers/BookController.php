@@ -83,7 +83,7 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        // if (Auth::user()->id !== $book->id) abort(401);
+        // if (Auth::user()->id !== $book->user_id) abort(401);
         if (Auth::user()->id !== $book->user_id) {
             return redirect()->route('books.index')->with('no_permission', $book);
         }
