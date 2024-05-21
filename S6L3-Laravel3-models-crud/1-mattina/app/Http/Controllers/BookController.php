@@ -11,7 +11,7 @@ class BookController extends Controller
     {
         // dal db prendiamo la lista dei libri
         // $books = Book::all();
-        $books = Book::paginate(); // default 15 per pagina
+        $books = Book::paginate(4); // default 15 per pagina
         // dd($books);
         // dump($books);
         // ddd($books);
@@ -65,7 +65,7 @@ class BookController extends Controller
         $newBook->img = $data['img'];
         $newBook->save();
 
-        Book::create($data); // necessita del $fillable nel model
+        // Book::create($data); // necessita del $fillable nel model
 
         // ridirezionare
         return redirect()->route('books.show', ['id' => $newBook->id]);
