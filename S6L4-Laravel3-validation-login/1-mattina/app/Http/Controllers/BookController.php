@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->user());
         // dal db prendiamo la lista dei libri
         $books = Book::all(); // select * from books
         // $books = Book::all(['title', 'price']); // select title, price from books

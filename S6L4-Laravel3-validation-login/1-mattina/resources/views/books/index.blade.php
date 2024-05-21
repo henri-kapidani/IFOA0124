@@ -7,7 +7,10 @@
     {{-- @dd($books) --}}
     {{-- @dump($books) --}}
 
+    {{-- @dd(Auth::user()) --}}
+
     {{-- visualizzare il messaggio se c'è --}}
+
     @session('saluto')
         <div class="alert alert-success" role="alert">
             {{ session('saluto') }}
@@ -38,7 +41,7 @@
                     <th scope="col">Img</th>
                     <th scope="col">Created_at</th>
                     <th scope="col">Updated_at</th>
-                    <th scope="col">Actions</th>
+                    @auth <th scope="col">Actions</th> @endauth
                 </tr>
             </thead>
             <tbody>
@@ -51,14 +54,18 @@
                         <td>{{ $book->img }}</td>
                         <td>{{ $book->created_at }}</td>
                         <td>{{ $book->updated_at }}</td>
-                        <td>
-                            <a class="btn btn-warning" href="{{ route('books.edit', ['id' => $book]) }}">Edit</a>
-                            <form action="{{ route('books.destroy', ['id' => $book]) }}" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger">Elimina</button>
-                            </form>
-                        </td>
+                        @auth
+                            <td>
+                                @if (Auth::user()->id === $book->user_id)
+                                    <a class="btn btn-warning" href="{{ route('books.edit', ['id' => $book]) }}">Edit</a>
+                                    <form action="{{ route('books.destroy', ['id' => $book]) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-danger">Elimina</button>
+                                    </form>
+                                @endif
+                            </td>
+                        @endauth
                     </tr>
                 @endforeach
             </tbody>

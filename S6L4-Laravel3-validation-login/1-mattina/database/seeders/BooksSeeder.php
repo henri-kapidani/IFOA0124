@@ -15,12 +15,13 @@ class BooksSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             Book::create([
                 'title' => fake()->words(rand(3, 10), true),
                 'price' => rand(100, 350),
                 'author' => fake()->name(),
                 'img' => fake()->imageUrl(640, 480),
+                'user_id' => rand(1, 5),
             ]);
 
             // DB::table('books')->insert([

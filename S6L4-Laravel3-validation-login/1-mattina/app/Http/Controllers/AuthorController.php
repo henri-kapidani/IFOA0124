@@ -13,7 +13,7 @@ class AuthorController extends Controller
     public function index()
     {
         $authors = Author::paginate();
-        dd($authors);
+        // dd($authors);
 
         return view('authors.index', [
             'authors' => $authors,
@@ -25,7 +25,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -41,8 +41,8 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        dd($author);
-        return view('authors.index', [
+        // dd($author);
+        return view('authors.show', [
             'author' => $author,
         ]);
     }
@@ -52,7 +52,7 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        return view('authors.edit');
     }
 
     /**
