@@ -84,7 +84,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
 
         // if (Auth::user()->id !== $book->id) abort(401);
-        if (Auth::user()->id !== $book->id) {
+        if (Auth::user()->id !== $book->user_id) {
             return redirect()->route('books.index')->with('no_permission', $book);
         }
 
@@ -103,7 +103,7 @@ class BookController extends Controller
         // aggiornare i dati nel database
         $book = Book::findOrFail($id);
 
-        if ($request->user()->id !== $book->id) abort(401);
+        if ($request->user()->id !== $book->user_id) abort(401);
 
         $book->title = $data['title'];
         $book->author = $data['author'];
@@ -119,7 +119,7 @@ class BookController extends Controller
     {
         // Hard delete (elimina la risorsa dal database per sempre)
         $book = Book::findOrFail($id);
-        if (Auth::user()->id !== $book->id) abort(401);
+        if (Auth::user()->id !== $book->user_id) abort(401);
         $book->delete();
 
         // $request->session()->put('saluto', 'ciao a tutti'); // questo non è flash, rimane anche dopo successivi refresh della pagina
