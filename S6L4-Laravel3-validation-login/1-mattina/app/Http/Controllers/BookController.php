@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -49,13 +50,15 @@ class BookController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        // if (Auth::guest()) abort(401);
         return view('books.create');
     }
 
     public function store(Request $request)
     {
+        // if (Auth::guest()) abort(401); // non necessario
         $data = $request->all();
         // dd($data);
 
@@ -67,6 +70,7 @@ class BookController extends Controller
         $newBook->author = $data['author'];
         $newBook->price = $data['price'];
         $newBook->img = $data['img'];
+        $newBook->user_id = $request->user()->id;
         $newBook->save();
 
         // Book::create($data); // necessita del $fillable nel model
@@ -78,6 +82,12 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::findOrFail($id);
+
+        // if (Auth::user()->id !== $book->id) abort(401);
+        if (Auth::user()->id !== $book->id) {
+            return redirect()->route('books.index')->with('no_permission', $book);
+        }
+
         // dd($book);
         return view('books.edit', compact('book'));
     }
@@ -92,6 +102,9 @@ class BookController extends Controller
 
         // aggiornare i dati nel database
         $book = Book::findOrFail($id);
+
+        if ($request->user()->id !== $book->id) abort(401);
+
         $book->title = $data['title'];
         $book->author = $data['author'];
         $book->price = $data['price'];
@@ -106,6 +119,7 @@ class BookController extends Controller
     {
         // Hard delete (elimina la risorsa dal database per sempre)
         $book = Book::findOrFail($id);
+        if (Auth::user()->id !== $book->id) abort(401);
         $book->delete();
 
         // $request->session()->put('saluto', 'ciao a tutti'); // questo non è flash, rimane anche dopo successivi refresh della pagina

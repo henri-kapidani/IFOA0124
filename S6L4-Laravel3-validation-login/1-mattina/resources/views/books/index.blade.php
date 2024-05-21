@@ -17,6 +17,12 @@
         </div>
     @endsession
 
+    @session('no_permission')
+        <div class="alert alert-danger" role="alert">
+            Non hai i permessi per modificare il post
+        </div>
+    @endsession
+
     @session('operation_success')
         <div class="alert alert-success" role="alert">
             Il libro "{{ session('operation_success')->title }}" è stato eliminato con successo
