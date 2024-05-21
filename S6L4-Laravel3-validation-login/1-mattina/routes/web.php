@@ -5,12 +5,14 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Greet;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 // queste rotte sono accessibili da tutti
+// Route::get('/', [PageController::class, 'home'])->middleware(Greet::class)->name('home');
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 
@@ -36,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/books',            [BookController::class, 'index'])->name('books.index');
+Route::get('/books/list',       [BookController::class, 'list'])->name('books.list');
 Route::get('/books/{id}',       [BookController::class, 'show'])->name('books.show');
 Route::resource('authors', AuthorController::class)->only(['index', 'show']);
 

@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
+        // dd($request->ciao);
         return view('home');
     }
 

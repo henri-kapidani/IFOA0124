@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
@@ -125,5 +126,19 @@ class BookController extends Controller
         // $request->session()->put('saluto', 'ciao a tutti'); // questo non è flash, rimane anche dopo successivi refresh della pagina
 
         return redirect()->route('books.index')->with('operation_success', $book);
+    }
+
+    public function list()
+    {
+        $books = Book::all();
+
+        // $books = DB::table('books')
+        //     ->select(DB::raw('*'))
+        //     ->get();
+
+        return response()->json([
+            'success' => true,
+            'data'  => $books
+        ]);
     }
 }
