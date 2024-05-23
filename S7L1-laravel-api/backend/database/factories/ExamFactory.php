@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,11 @@ class ExamFactory extends Factory
      */
     public function definition(): array
     {
+        $course_ids = Course::all()->pluck('id')->all();
         return [
-            //
+            'date' => fake()->dateTime(),
+            'location' => fake()->randomElement(['A1', 'A2', 'A3', 'B1', 'B2', 'M10', 'M11']),
+            'course_id' => fake()->randomElement($course_ids),
         ];
     }
 }

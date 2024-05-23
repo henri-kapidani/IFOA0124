@@ -17,7 +17,9 @@ class FacultyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->words(rand(4, 10), true),
+            'address' => fake()->address(),
+            'telephone' => fake()->phoneNumber(),
         ];
     }
 }

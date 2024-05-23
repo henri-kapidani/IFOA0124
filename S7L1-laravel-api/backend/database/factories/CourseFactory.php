@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,11 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        $subject_ids = Subject::all()->pluck('id')->all();
         return [
-            //
+            'year' => fake()->year(),
+            'semester' => rand(1, 2),
+            'subject_id' => fake()->randomElement($subject_ids),
         ];
     }
 }

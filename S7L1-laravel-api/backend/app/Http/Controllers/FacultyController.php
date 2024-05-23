@@ -13,7 +13,8 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        //
+        $faculties = Faculty::all();
+        dd($faculties);
     }
 
     /**
