@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name', 100);
+            $table->tinyInteger('cfu')->unsigned()->nullable();
+            $table->foreignId('degree_id')->constrained();
+            // $table->timestamps();
         });
     }
 

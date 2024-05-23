@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->year('year');
+            $table->tinyInteger('semester')->unsigned();
+            $table->foreignId('subject_id')->constrained();
+            // $table->timestamps();
         });
     }
 

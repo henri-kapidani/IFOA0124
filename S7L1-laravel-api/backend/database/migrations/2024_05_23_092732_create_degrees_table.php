@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('type', 1)->nullable();
             $table->tinyInteger('duration')->unsigned()->nullable();
             // $table->bigInteger('faculty_id')->unsigned();
-            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('faculty_id')->references('id')->on('users');
             $table->foreignId('faculty_id')->constrained(); // ->onUpdate('cascade')->onDelete('cascade');
             // $table->timestamps();
         });
@@ -26,9 +26,12 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(Blueprint $table): void
+    public function down(): void
     {
-        $table->dropForeign(['user_id']);
+        // TODO: check this
+        // Schema::table('degrees', function (Blueprint $table) {
+        //     $table->dropForeign(['faculty_id']);
+        // });
         Schema::dropIfExists('degrees');
     }
 };

@@ -11,7 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('profile_img')->nullable();
+            $table->string('role', 20)->nullable();
+            $table->foreignId('degree_id')->constrained();
+        });
     }
 
     /**
@@ -19,6 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('profile_img');
+            $table->dropColumn('role');
+            $table->dropForeign(['degree_id']); // TODO: make this work
+        });
     }
 };

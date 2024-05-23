@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
+            $table->datetime('date')->nullable();
+            $table->string('location')->nullable();
+            $table->foreignId('course_id')->constrained();
             $table->timestamps();
         });
     }
