@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             'degree_id' => 1
         ]);
 
-        User::factory(1000)->create();
+        User::factory(10)->create();
 
         $users = User::all()->all();
         $exam_ids = Exam::all()->pluck('id')->all();
@@ -43,12 +43,12 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
             if ($user->degree_id) {
-                $exams_for_student = fake()->randomElements($exam_ids, null);
+                $exams_for_student = fake()->randomElements($exam_ids, rand(0, min(40, $exam_ids)));
                 foreach ($exams_for_student as $exam_id) {
                     $user->exams()->attach($exam_id, ['mark' => rand(0, 31)]);
                 }
             } else {
-                $courses_for_professor = fake()->randomElements($course_ids, null);
+                $courses_for_professor = fake()->randomElements($course_ids, rand(0, min(50, $course_ids)));
                 foreach ($courses_for_professor as $course_id) {
                     $user->courses()->attach($course_id, ['salary' => rand(10000, 25000)]);
                 }
