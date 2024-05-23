@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('profile_img')->nullable();
             $table->string('role', 20)->nullable();
-            $table->foreignId('degree_id')->constrained();
+            $table->foreignId('degree_id')->nullable()->constrained();
         });
     }
 
@@ -26,7 +26,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('profile_img');
             $table->dropColumn('role');
-            $table->dropForeign(['degree_id']); // TODO: make this work
+            // $table->dropForeign('users_degree_id_foreign'); // TODO: make this work
+            $table->dropForeign(['faculty_id']); // TODO: make this work
         });
     }
 };
