@@ -8,15 +8,15 @@ const FacultyPage = () => {
     useEffect(() => {
         fetch(`http://localhost:8000/api/v1/faculties/${id}`)
             .then((res) => res.json())
-            .then((data) => setFaculty(data));
+            .then((data) => setFaculty(data.data));
     }, [id]);
 
     return (
         faculty && (
             <>
-                <h1>{faculty.data.name}</h1>
-                <h2>{faculty.data.address}</h2>
-                Phone: {faculty.data.telephone}
+                <h1>{faculty.name}</h1>
+                <h2>{faculty.address}</h2>
+                Phone: {faculty.telephone}
             </>
         )
     );

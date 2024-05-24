@@ -43,12 +43,12 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
             if ($user->degree_id) {
-                $exams_for_student = fake()->randomElements($exam_ids, rand(0, min(40, $exam_ids)));
+                $exams_for_student = fake()->randomElements($exam_ids, rand(0, min(40, count($exam_ids))));
                 foreach ($exams_for_student as $exam_id) {
                     $user->exams()->attach($exam_id, ['mark' => rand(0, 31)]);
                 }
             } else {
-                $courses_for_professor = fake()->randomElements($course_ids, rand(0, min(50, $course_ids)));
+                $courses_for_professor = fake()->randomElements($course_ids, rand(0, min(50, count($course_ids))));
                 foreach ($courses_for_professor as $course_id) {
                     $user->courses()->attach($course_id, ['salary' => rand(10000, 25000)]);
                 }
