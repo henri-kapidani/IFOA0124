@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Exam;
-use App\Http\Requests\StoreExamRequest;
-use App\Http\Requests\UpdateExamRequest;
+use App\Models\Subject;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSubjectRequest;
+use App\Http\Requests\UpdateSubjectRequest;
 
-class ExamController extends Controller
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class ExamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExamRequest $request)
+    public function store(StoreSubjectRequest $request)
     {
         //
     }
@@ -35,7 +36,7 @@ class ExamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Exam $exam)
+    public function show(Subject $subject)
     {
         //
     }
@@ -43,7 +44,7 @@ class ExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exam $exam)
+    public function edit(Subject $subject)
     {
         //
     }
@@ -51,7 +52,7 @@ class ExamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateExamRequest $request, Exam $exam)
+    public function update(UpdateSubjectRequest $request, Subject $subject)
     {
         //
     }
@@ -59,7 +60,7 @@ class ExamController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exam $exam)
+    public function destroy(Subject $subject)
     {
         //
     }

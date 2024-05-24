@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             'degree_id' => 1
         ]);
 
-        User::factory(10)->create();
+        User::factory(100)->create();
 
         $users = User::all()->all();
         $exam_ids = Exam::all()->pluck('id')->all();

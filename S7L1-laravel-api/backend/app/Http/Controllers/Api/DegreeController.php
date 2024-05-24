@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Faculty;
-use App\Http\Requests\StoreFacultyRequest;
-use App\Http\Requests\UpdateFacultyRequest;
+use App\Models\Degree;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDegreeRequest;
+use App\Http\Requests\UpdateDegreeRequest;
 
-class FacultyController extends Controller
+class DegreeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $faculties = Faculty::all();
-        dd($faculties);
+        //
     }
 
     /**
@@ -28,7 +28,7 @@ class FacultyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFacultyRequest $request)
+    public function store(StoreDegreeRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class FacultyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Faculty $faculty)
+    public function show(Degree $degree)
     {
         //
     }
@@ -44,7 +44,7 @@ class FacultyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Faculty $faculty)
+    public function edit(Degree $degree)
     {
         //
     }
@@ -52,7 +52,7 @@ class FacultyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFacultyRequest $request, Faculty $faculty)
+    public function update(UpdateDegreeRequest $request, Degree $degree)
     {
         //
     }
@@ -60,7 +60,7 @@ class FacultyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Faculty $faculty)
+    public function destroy(Degree $degree)
     {
         //
     }
