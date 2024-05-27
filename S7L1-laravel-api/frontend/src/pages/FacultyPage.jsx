@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FacultyPage = () => {
     const [faculty, setFaculty] = useState(null); // null buon candidato
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/v1/faculties/${id}`)
-            .then((res) => res.json())
+        fetch(`/api/v1/faculties/${id}`)
+            .then((res) => {
+                if (!res.ok) navigate('/404');
+                return res.json();
+            })
             .then((data) => setFaculty(data.data));
     }, [id]);
 

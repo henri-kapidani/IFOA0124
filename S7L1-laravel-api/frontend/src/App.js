@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { LOGIN } from './redux/actions';
 import ProtectedRoutes from './pages/ProtectedRoutes';
 import GuestRoutes from './pages/GuestRoutes';
+import NotFound from './pages/NotFound';
 
 function App() {
     axios.defaults.withCredentials = true;
@@ -53,6 +54,9 @@ function App() {
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
                         </Route>
+
+                        <Route path="/404" element={<NotFound />} />
+                        <Route path="*" element={<Navigate to="/404" />} />
                     </Routes>
                 </div>
 

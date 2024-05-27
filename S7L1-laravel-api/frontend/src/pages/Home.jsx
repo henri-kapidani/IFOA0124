@@ -5,7 +5,7 @@ const Home = () => {
     const [faculties, setFaculties] = useState([]); // null buon candidato
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/v1/faculties')
+        fetch('/api/v1/faculties')
             .then((res) => res.json())
             .then((data) => setFaculties(data));
     }, []);
