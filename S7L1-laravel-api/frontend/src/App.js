@@ -12,6 +12,7 @@ import { LOGIN } from './redux/actions';
 import ProtectedRoutes from './pages/ProtectedRoutes';
 import GuestRoutes from './pages/GuestRoutes';
 import NotFound from './pages/NotFound';
+import Transcript from './pages/Transcript';
 
 function App() {
     axios.defaults.withCredentials = true;
@@ -46,6 +47,10 @@ function App() {
                             <Route
                                 path="/faculties/:id"
                                 element={<FacultyPage />}
+                            />
+                            <Route
+                                path="/transcript"
+                                element={<Transcript />}
                             />
                         </Route>
 

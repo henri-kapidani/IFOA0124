@@ -12,6 +12,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::name('api.v1.')
     ->prefix('v1')
+    ->middleware(['auth:sanctum'])
     ->group(function () {
         Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
         Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');
