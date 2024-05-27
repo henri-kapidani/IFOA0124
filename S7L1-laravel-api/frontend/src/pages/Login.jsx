@@ -1,6 +1,11 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { LOGIN } from '../redux/actions';
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -15,13 +20,18 @@ const Login = () => {
 
     const submitLogin = (ev) => {
         ev.preventDefault();
-        console.log(formData);
-        // TODO: fetch per loggarsi
-        // recuperare il csrf token e il session token
-        fetch('/sanctum/csrf-cookie');
-        // fetch con email e password per loggarci
-
-        // fetch per recuperare i dati dell'utente
+        // gli indirizzi relativi, con il proxy attivo fanno la richiesta a http://localhost:8000/login mascherandolo come indirizzo nello stesso host di react (che nel nostro caso è http://localhost:3000/login)
+        axios
+            .get('/sanctum/csrf-cookie')
+            .then(() => axios.post('/login', formData))
+            .then(() => axios.get('/api/user'))
+            .then((res) => {
+                // salvare i dati dello user nel Redux state
+                dispatch({
+                    type: LOGIN,
+                    payload: res.data,
+                });
+            });
     };
 
     return (
