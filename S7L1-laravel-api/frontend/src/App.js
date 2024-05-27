@@ -6,25 +6,59 @@ import FacultyPage from './pages/FacultyPage';
 import './App.css';
 import axios from 'axios';
 import TopNav from './components/TopNav';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { LOGIN } from './redux/actions';
+import ProtectedRoutes from './pages/ProtectedRoutes';
+import GuestRoutes from './pages/GuestRoutes';
 
 function App() {
     axios.defaults.withCredentials = true;
     axios.defaults.withXSRFToken = true;
 
-    return (
-        <BrowserRouter>
-            <TopNav />
-            <div className="container">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/faculties/:id" element={<FacultyPage />} />
-                </Routes>
-            </div>
+    const dispatch = useDispatch();
+    const [loaded, setLoaded] = useState(false);
 
-            {/* <Footer /> */}
-        </BrowserRouter>
+    useEffect(() => {
+        axios('/api/user')
+            .then((res) =>
+                dispatch({
+                    type: LOGIN,
+                    payload: res.data,
+                })
+            )
+            .catch((err) => console.log(err))
+            .finally(() => setLoaded(true));
+    }, [dispatch]);
+
+    return (
+        loaded && (
+            <BrowserRouter>
+                <TopNav />
+                <div className="container">
+                    <Routes>
+                        {/* rotte accessibili da tutti */}
+                        <Route path="/" element={<Home />} />
+
+                        {/* rotte accessibili solo se sei loggato */}
+                        <Route element={<ProtectedRoutes />}>
+                            <Route
+                                path="/faculties/:id"
+                                element={<FacultyPage />}
+                            />
+                        </Route>
+
+                        {/* rotte accessibili solo se NON sei loggato */}
+                        <Route element={<GuestRoutes />}>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                        </Route>
+                    </Routes>
+                </div>
+
+                {/* <Footer /> */}
+            </BrowserRouter>
+        )
     );
 }
 

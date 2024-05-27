@@ -1,8 +1,20 @@
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { LOGOUT } from '../redux/actions';
 
 const TopNav = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const user = useSelector((state) => state.user);
+
+    const logout = () => {
+        axios
+            .post('/logout')
+            .then(() => dispatch({ type: LOGOUT }))
+            .then(() => navigate('/login'));
+    };
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -57,16 +69,21 @@ const TopNav = () => {
                     {user ? (
                         <>
                             <span className="me-2">{user.name}</span>
-                            <button className="btn btn-primary">Logout</button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={logout}
+                            >
+                                Logout
+                            </button>
                         </>
                     ) : (
                         <>
-                            <button className="btn btn-primary me-2">
+                            <Link className="btn btn-primary me-2" to="/login">
                                 Login
-                            </button>
-                            <button className="btn btn-primary">
+                            </Link>
+                            <Link className="btn btn-primary" to="/register">
                                 Register
-                            </button>
+                            </Link>
                         </>
                     )}
 
