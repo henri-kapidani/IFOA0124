@@ -35,11 +35,17 @@ const TopNav = () => {
                     id="navbarSupportedContent"
                 >
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <Link className="nav-link active" to="/">
-                                Home
-                            </Link>
-                        </li>
+                        {user?.role === 'student' && (
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link active"
+                                    to="/transcript"
+                                >
+                                    Transcript
+                                </Link>
+                            </li>
+                        )}
+
                         <li className="nav-item dropdown">
                             <Link
                                 className="nav-link dropdown-toggle"
@@ -69,7 +75,12 @@ const TopNav = () => {
                     {user ? (
                         <>
                             <span className="me-2">{user.name}</span>
-                            <img src={'/storage/' + user.profile_img} alt="" />
+                            <img
+                                className="me-2"
+                                src={user.profile_img}
+                                alt=""
+                                style={{ height: '50px', width: '50px' }}
+                            />
                             <button
                                 className="btn btn-primary"
                                 onClick={logout}

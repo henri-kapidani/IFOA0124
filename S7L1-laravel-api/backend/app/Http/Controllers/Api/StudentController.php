@@ -11,6 +11,8 @@ class StudentController extends Controller
 {
     public function transcript()
     {
+        if (Auth::user()->role !== "student") abort(401);
+
         // lista esami superati dallo studente loggato
         // $student_id = Auth::user()->id;
         $student_id = 2;

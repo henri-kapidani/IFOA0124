@@ -29,7 +29,8 @@ class RegisteredUserController extends Controller
         ]);
 
         // salvare l'immagine
-        $file_path = Storage::put('', $request['profile_img']);
+        // $file_path = Storage::disk('local')->put('', $request['profile_img']); // usa lo storage specificato
+        $file_path = $request['profile_img'] ? Storage::put('/profiles', $request['profile_img']) : null; // usa lo storage di default
 
         // mettere nel db il percorso dell'immagine
         $user = User::create([
@@ -40,7 +41,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->string('password')),
             'role' => 'student',
-            'profile_img' => $file_path,
+            'profile_img' => 'storage/' . $file_path,
         ]);
 
         event(new Registered($user));

@@ -44,7 +44,6 @@ const Register = () => {
                     formData.password_confirmation
                 );
                 body.append('profile_img', profileImage); // TODO: verify this
-                console.log(body);
                 return axios.post('/register', body);
             })
             .then(() => axios.get('/api/user'))
@@ -62,6 +61,7 @@ const Register = () => {
     };
 
     return (
+        // <form method="POST" action="....." novalidate enctype='multipart/form-data'> // se fatto in Blade
         <form onSubmit={(ev) => submitLogin(ev)} noValidate>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">

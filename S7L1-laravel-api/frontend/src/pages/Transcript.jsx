@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Transcript = () => {
+    const navigate = useNavigate();
     const [exams, setExams] = useState([]);
 
     useEffect(() => {
         axios
             .get('/api/v1/transcript')
-            .then((res) => setExams(res.data.data.exams));
+            .then((res) => setExams(res.data.data.exams))
+            .catch((err) => navigate('/'));
     }, []);
 
     return (
