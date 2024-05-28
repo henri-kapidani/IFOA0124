@@ -10,9 +10,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::name('api.v1.')
-    ->prefix('v1')
-    ->middleware(['auth:sanctum'])
+Route::name('api.v1.') // prefissa il nome della rotta è come se scriviamo: ....->name('api.v1.faculties.index')
+    ->prefix('v1')     // prefissa l'url è come se scriviamo: Route::get('/api/v1/faculties', [.....])...
+    // il prefix /api lo da di default il fatto che queste rotte sono scritte nel file api.php
+    // ->middleware(['auth:sanctum'])
     ->group(function () {
         Route::get('/faculties', [FacultyController::class, 'index'])->name('faculties.index');
         Route::get('/faculties/{faculty}', [FacultyController::class, 'show'])->name('faculties.show');

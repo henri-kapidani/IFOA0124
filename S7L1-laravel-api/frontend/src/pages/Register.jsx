@@ -6,12 +6,16 @@ import { LOGIN } from '../redux/actions';
 const Register = () => {
     const dispatch = useDispatch();
 
+    const [profileImage, setProfileImage] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
+        profile_img: '',
     });
+
+    const [errors, setErrors] = useState(null);
 
     const updateInputValue = (ev) => {
         setFormData((oldFormData) => ({
@@ -20,12 +24,29 @@ const Register = () => {
         }));
     };
 
+    const updateImageField = (ev) => {
+        updateInputValue(ev);
+        setProfileImage(ev.target.files[0]);
+    };
+
     const submitLogin = (ev) => {
         ev.preventDefault();
         // gli indirizzi relativi, con il proxy attivo fanno la richiesta a http://localhost:8000/login mascherandolo come indirizzo nello stesso host di react (che nel nostro caso è http://localhost:3000/login)
         axios
             .get('/sanctum/csrf-cookie')
-            .then(() => axios.post('/register', formData))
+            .then(() => {
+                const body = new FormData();
+                body.append('name', formData.name);
+                body.append('email', formData.email);
+                body.append('password', formData.password);
+                body.append(
+                    'password_confirmation',
+                    formData.password_confirmation
+                );
+                body.append('profile_img', profileImage); // TODO: verify this
+                console.log(body);
+                return axios.post('/register', body);
+            })
             .then(() => axios.get('/api/user'))
             .then((res) => {
                 // salvare i dati dello user nel Redux state
@@ -34,6 +55,10 @@ const Register = () => {
                     payload: res.data,
                 });
             });
+        // .catch((err) => {
+        //     console.log(err.response.data.errors);
+        //     setErrors(err.response.data.errors);
+        // });
     };
 
     return (
@@ -88,6 +113,19 @@ const Register = () => {
                     name="password_confirmation"
                     onChange={(ev) => updateInputValue(ev)}
                     value={formData.password_confirmation}
+                />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="profile_img" className="form-label">
+                    Profile image
+                </label>
+                <input
+                    className="form-control"
+                    type="file"
+                    id="profile_img"
+                    name="profile_img"
+                    onChange={(ev) => updateImageField(ev)}
+                    value={formData.profile_img}
                 />
             </div>
             <button type="submit" className="btn btn-primary">

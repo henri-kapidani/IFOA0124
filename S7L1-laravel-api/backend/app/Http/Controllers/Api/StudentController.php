@@ -12,10 +12,12 @@ class StudentController extends Controller
     public function transcript()
     {
         // lista esami superati dallo studente loggato
-        $student_id = Auth::user()->id;
-        // $student_id = 5;
+        // $student_id = Auth::user()->id;
+        $student_id = 2;
 
         $passed_exams = User::with('exams', 'exams.course', 'exams.course.subject')->find($student_id); //->where('mark', '>=', 18)->orderBy('date')->get();
+        $passed_exams = User::find($student_id);
+        $passed_exams = User::with('exams', 'exams.course', 'exams.course.subject')->find($student_id);
         // TODO: esempio per il wherePivot
 
         return [

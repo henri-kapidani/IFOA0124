@@ -69,6 +69,7 @@ const TopNav = () => {
                     {user ? (
                         <>
                             <span className="me-2">{user.name}</span>
+                            <img src={'/storage/' + user.profile_img} alt="" />
                             <button
                                 className="btn btn-primary"
                                 onClick={logout}
