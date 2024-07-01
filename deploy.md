@@ -23,6 +23,8 @@ Route::get('{any?}', function () {
 ```
 APP_ENV=production
 APP_DEBUG=false
+APP_URL=https://nome-vostro-dominio.abc
+FRONTEND_URL=https://nome-vostro-dominio.abc
 # per la parte di database vanno messe le credenziali che recuperate dall'hosting
 ```
 
