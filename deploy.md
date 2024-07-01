@@ -40,4 +40,18 @@ php artisan key:generate
 
 -   Copiare il contenuto della `public` di Laravel nella cartella pubblica del server (in genere `www` oppure `public_html` o qualcosa del genere)
 -   Copiare tutto il resto (quindi eccetto la cartella `public`) contenuto nella catella del progetto Laravel nella cartella genitore di `www` nel server
+-   Fare in locale le migrations:
+
+```
+php artisan migrate
+```
+
+-   Se servono anche i dati del seeder eseguire anche quello:
+
+```
+php artisan db:seed
+```
+
+-   Anadare in phpMyAdmin (o qualsiasi altro client per il database) ed esportare il database del progetto
+-   Dal pannello del server (dovrebbe offrire un pannello phpMyAdmin) importare il database esportato prima
 -   Provare se funziona
