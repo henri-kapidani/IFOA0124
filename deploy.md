@@ -52,6 +52,6 @@ php artisan migrate
 php artisan db:seed
 ```
 
--   Anadare in phpMyAdmin (o qualsiasi altro client per il database) ed esportare il database del progetto
+-   Andare in phpMyAdmin in locale (o qualsiasi altro client per il database) ed esportare il database del progetto
 -   Dal pannello del server (dovrebbe offrire un pannello phpMyAdmin) importare il database esportato prima
 -   Provare se funziona
