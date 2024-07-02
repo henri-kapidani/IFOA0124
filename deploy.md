@@ -1,5 +1,7 @@
 # Deploy su dominio condiviso di un progetto Laravel + React
 
+## Api e frontend sotto lo stesso dominio
+
 Con questa tecnica frontend e backend sono serviti dallo stesso dominio, quindi non ci sono problemi di CORS.
 
 -   Fare la build del progetto React:
@@ -107,7 +109,7 @@ Route::get('/clear-cache', function () {
 
 anche questa rotta è bene commentarla dopo averla usata.
 
-## Sistemare il caricamento dei file:
+### Sistemare il caricamento dei file
 
 Negli hosting condivisi si hanno limitazioni che non permettono di cambiare il proprietario di file e cartelle (non abbiamo accesso al terminale per eseguire il comando `chown`), quindi il link alla cartella `storage/app/public` non funzionerà, però si può ovviare al problema mettendo i file direttamente nella cartella pubblica del sito senza bisogno del link.
 
@@ -132,3 +134,64 @@ FILESYSTEM_DISK=shared_hosting
 ```
 
 -   Se nel codice è stato usato il disco di default tutto dovrebbe funzionare.
+
+## Api e frontend su domini diversi
+
+Con questa tecnica sono serviti su domini diversi (sottodomini o anche domini totalmente diversi) ad esempio:
+api su `https://api.miosito.com` e frontend su `https://miosito.com` oppure api su `https://la-mia-api.com` e frontend su `https://il-mio-profilo.github.io/frontend-repo`.
+Essendo i domini diversi, in questo caso nascono problemi di CORS.
+
+### Risolvere i problemi di CORS
+
+Nel progetto React, in `App.js` impostare axios con le impostazioni globali:
+
+```js
+import axios from 'axios';
+
+axios.defaults.withCredentials = true; // include i cookie negli headers di ogni richiesta
+axios.defaults.withXSRFToken = true; // aggiunge alle richieste l'header X-Xsrf-Token prendendo il valore dal cookie XSRF-TOKEN
+
+function App() {
+    // codice
+}
+```
+
+oppure aggiungere manualmente l'oggetto delle opzioni alle chiamate axios:
+
+```js
+{
+	headers: {
+		accept: 'application/json',
+		'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'), // getCookie va implementato
+	}
+	withCredentials: true,
+}
+```
+
+Quindi bisogna assicurarsi che tra gli header delle richieste ci siano `X-Xsrf-Token` e `Cookie`
+
+Bisogna controllare anche che tra gli header delle risposte che ci arrivano dal server ci sia `Access-Control-Allow-Credentials: true`, se dovesse mancare andare in `config/cors.php` di Laravel e settare:
+
+```
+'supports_credentials' => true,
+```
+
+I lax cookies non si possono condividere tra domini diversi, per risolvere bisogna settare nel file `.env` di Laravel:
+
+```
+SESSION_DOMAIN=nome.dominio
+```
+
+ad esempio: `SESSION_DOMAIN=localhost`, `SESSION_DOMAIN=www.miosito.com`, `SESSION_DOMAIN=api.sito.mio` <u>**_senza protocollo, porta o slash_**</u>. Forse funziona anche settando `SESSION_DOMAIN=null` ma è da verificare.
+
+### NOTA
+
+Durante lo sviluppo, in particolare quando non si ha il controllo del server (ad esempio si sta usando un'api esistente), per risolvere i problemi di CORS si può aggiungere in `package.json` la chiave:
+
+```json
+"proxy": "https://dominio-server-api-con:porta/",
+```
+
+ad esempio: `"proxy": "http://localhost:8000/"`. Gli indirizzi nelle fetch devono iniziare con lo `/` (quindi al browser sembreranno chiamate indirizzate allo stesso dominio del frontend, il proxy di React si occuperà di fare la richiesta all'indirizzo giusto).
+
+Si possono risolvere i problemi di CORS anche installando un'estensione per il browser, oppure disattivando i controlli del CORS dalle impostazioni avanzate che offrono alcuni browser.
