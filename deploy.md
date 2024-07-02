@@ -62,18 +62,73 @@ php artisan db:seed
 
 -   Andare in phpMyAdmin in locale (o qualsiasi altro client per il database) ed esportare il database del progetto
 -   Dal pannello del server (dovrebbe offrire un pannello phpMyAdmin) importare il database esportato prima
--   Provare se funziona
+-   Potrebbe essere possibile eseguire migration e seeder creandosi rotte di questo tipo (da mettere sempre prima della any creata prima che deve essere l'ultima rotta nel file `web.php`), e poi visitando gli indirizzi dal browser:
+
+```php
+Route::get('/migrate', function () {
+    try {
+        Artisan::call('migrate');
+        return 'Migrations executed';
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+
+});
+
+Route::get('/seed', function () {
+    try {
+        Artisan::call('db:seed');
+        return 'Seeders executed';
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+});
+```
+
+**_questa soluzione non è testata quindi potrebbe non funzionare_**, comunque è **_IMPORTANTE commentare le rotte dopo averle usate altrimenti chiunque scopra questi indirizzi puo' fare migrations e seeders sul nonstro database in qualsiasi momento!_**
 
 -   Se dovesse servire pulire la cache di Laravel sul server condiviso potrebbe essere utile creare questa rotta (da mettere sempre prima della any creata prima che deve essere l'ultima rotta nel file `web.php`), quindi visitare l'indirizzo da browser:
 
 ```php
 Route::get('/clear-cache', function () {
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('optimize:clear');
-    Artisan::call('event:clear');
-    return 'Cache cleared';
+    try {
+        Artisan::call('cache:clear');
+        Artisan::call('route:clear');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
+        Artisan::call('optimize:clear');
+        Artisan::call('event:clear');
+        return 'Cache cleared';
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
 });
 ```
+
+anche questa rotta è bene commentarla dopo averla usata.
+
+## Sistemare il caricamento dei file:
+
+Negli hosting condivisi si hanno limitazioni che non permettono di cambiare il proprietario di file e cartelle (non abbiamo accesso al terminale per eseguire il comando `chown`), quindi il link alla cartella `storage/app/public` non funzionerà, però si può ovviare al problema mettendo i file direttamente nella cartella pubblica del sito senza bisogno del link.
+
+-   All'interno della cartella pubblica dell'hosting creare la cartella `storage`
+
+-   Aggiungere un nuovo disco in `config/filesystems.php` (il nome del disco non è importante):
+
+```php
+'shared_hosting' => [
+    'driver' => 'local',
+    'root' => base_path('/www/storage'), // percorso alla cartella pubblica del sito
+    'url' => env('APP_URL').'/storage',
+    'visibility' => 'public',
+    'throw' => false,
+],
+```
+
+-   Nel file `.env` settare FILESYSTEM_DISK al nome del disco appena creato:
+
+```
+FILESYSTEM_DISK=shared_hosting
+```
+
+-   Se nel codice è stato usato il disco di default tutto dovrebbe funzionare.
