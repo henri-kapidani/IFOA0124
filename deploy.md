@@ -186,7 +186,7 @@ ad esempio: `SESSION_DOMAIN=localhost`, `SESSION_DOMAIN=www.miosito.com`, `SESSI
 
 ### NOTA
 
-Durante lo sviluppo, in particolare quando non si ha il controllo del server (ad esempio si sta usando un'api esistente), per risolvere i problemi di CORS si può aggiungere in `package.json` la chiave:
+Durante lo sviluppo, in particolare quando non si ha il controllo del server (ad esempio si sta usando un'api esistente), per risolvere i problemi di CORS si può aggiungere nel `package.json` del progetto React la chiave:
 
 ```json
 "proxy": "https://dominio-server-api-con:porta/",
