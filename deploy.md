@@ -6,18 +6,24 @@
 npm run build
 ```
 
--   Rinominare la `index.html` presente nella cartella `build` in `index.php` e spostarla nella cartella `resources/views` di Laravel
--   Copiare gli altri file della cartella `build` nella `public` di Laravel
 -   Clonare il progetto Laravel in una nuova cartella
+-   Nella cartella `build` di React rinominare il file `index.html` in `index.php` e spostarlo nella cartella `resources/views` di Laravel
+-   Copiare gli altri file della cartella `build` di React nella `public` di Laravel (ma non sovrascrivere file con lo stesso nome già presenti in `public`)
 -   Aggiungere alla fine di `routes/web.php` questo codice:
 
 ```php
 Route::get('{any?}', function () {
     return view('index');
-})->where("any", ".*")->name('index');
+})->where('any', '^(?!api\/).*$')->name('index');
 ```
 
--   Generare il file .env
+e se presente rimuovere o commentare la rotta alla root del sito (in `routes/web.php`):
+
+```php
+Route::get('/', '.............');
+```
+
+-   Generare il file `.env` copiando e rinominando `.env.example`
 -   Al suo interno settare:
 
 ```
